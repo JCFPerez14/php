@@ -12,7 +12,7 @@ $query_delete = mysqli_query($connections, "SELECT * FROM sir WHERE id='$user_id
         $db_section = $row["Section"];
         $db_contact = $row["Contact"];
     }
-    echo "<h2>Are you sure you want to delete this record?</h2>";
+    echo "<h2>Are you sure you want to delete this record $db_name ?</h2>";
     ?>
     <form method="POST" action="Delete_Now.php">
         <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">

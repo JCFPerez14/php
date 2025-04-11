@@ -41,6 +41,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     </style>
 
+    <br>
+    <?php include("class/navbar.php"); ?>
+
+    <br>
+    <br>
+
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
 
         <input type="text" name="CompleteName" placeholder="Complete Name" value="<?php echo $CompleteName; ?>"><br>
@@ -109,3 +115,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo "</table>"
 ?>
 
+<hr>
+<?php
+
+$Paul = "Paul";
+$Mica = "Mica";
+$Kaye = "Kaye";
+
+$names = array("Paul", "Mica", "Kaye");
+foreach($names as $display_names){
+    echo $display_names . "<br>";
+}
+
+
+?>
