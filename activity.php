@@ -100,7 +100,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <td>
                     <a href='edit.php?id=$user_id'>Update</a>
                     &nbsp;
-                    <a href='delete.php'>Delete</a>
+                    <a href='delete.php?id=$user_id'>Delete</a>
                     </td>
 
                 </tr>";

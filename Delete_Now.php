@@ -1,0 +1,8 @@
+<?php
+include("class/database.php");
+$user_id = $_POST["user_id"];
+mysqli_query($connections, "DELETE FROM sir WHERE id='$user_id' ");
+
+echo "<script language='javascript'>alert('Record has been deleted!')</script>";
+echo "<script>window.location.href='index.php';</script>";
+?>
