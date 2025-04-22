@@ -1,1 +1,1 @@
-<a heref=index.php>Home</a> &nbsp; <a href=class/search.php>Search</a>
+<a heref=index.php>Home</a> &nbsp; <a href=class/search.php>Search</a> &nbsp; <a href="login.php">LogIn</a>

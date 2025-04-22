@@ -1,6 +1,9 @@
 <?php
-$CompleteName = $CompleteAddress = $EmailAddress = $Section = $Contact = "";
-$CompleteNameErr = $CompleteAddressErr = $EmailAddressErr = $SectionErr = $ContactErr = "";
+
+include("class/database.php");
+
+$CompleteName = $CompleteAddress = $EmailAddress = $Section = $Contact = $Password = $CPassword = "";
+$CompleteNameErr = $CompleteAddressErr = $EmailAddressErr = $SectionErr = $ContactErr = $PasswordErr = $CPasswordErr = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
@@ -33,6 +36,36 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else{
         $Contact = $_POST["Contact"];
     }
+
+    if(empty($_POST["Password"])){
+        $PasswordErr = "Password is required";
+    } else{
+        $Password = $_POST["Password"];
+    }
+
+    if(empty($_POST["CPassword"])){
+        $CPasswordErr = "Confirm Password is required";
+    } else{
+        $CPassword = $_POST["CPassword"];
+    }
+
+    if($CompleteName && $CompleteAddress && $EmailAddress && $Section && $Contact && $Password && $CPassword){
+
+        $Check_email = mysqli_query($connections, "SELECT * FROM sir WHERE Email='$EmailAddress'");
+        $Check_email_row = mysqli_num_rows($Check_email);
+
+        if($Check_email_row > 0){
+
+            $EmailAddressErr = "Email is alredy registered!";
+
+        }else{
+            $query = mysqli_query($connections, "INSERT INTO sir (Name, Adress, Email, Section, Contact, Password, Account_type) 
+            VALUES('$CompleteName', '$CompleteAddress', '$EmailAddress', '$Section ', '$Contact', '$CPassword', '2') ");
+
+            echo "<script language='javascript'>alert('New Record has been inserted!')</script>";
+            echo "<script>windows.location.href='activity.php';</script>";
+        }
+    }
 }
 ?>
     <style>
@@ -49,35 +82,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
 
-        <input type="text" name="CompleteName" placeholder="Complete Name" value="<?php echo $CompleteName; ?>"><br>
+        Name: <input type="text" name="CompleteName" placeholder="Complete Name" value="<?php echo $CompleteName; ?>"><br>
             <span class="error"><?php echo $CompleteNameErr; ?></span><br>
 
-        <input type="text" name="CompleteAddress" placeholder="Address" value="<?php echo $CompleteAddress; ?>"><br>
+        Address: <input type="text" name="CompleteAddress" placeholder="Address" value="<?php echo $CompleteAddress; ?>"><br>
             <span class="error"><?php echo $CompleteAddressErr; ?></span><br>
 
-        <input type="text" name="EmailAddress" placeholder="Email" value="<?php echo $EmailAddress; ?>"><br>
+        Email: <input type="text" name="EmailAddress" placeholder="Email" value="<?php echo $EmailAddress; ?>"><br>
             <span class="error"><?php echo $EmailAddressErr; ?></span><br>
         
-        <input type="text" name="Section" placeholder="Section" value="<?php echo $Section; ?>"><br>
+        Section: <input type="text" name="Section" placeholder="Section" value="<?php echo $Section; ?>"><br>
             <span class="error"><?php echo $SectionErr; ?></span><br>
 
-        <input type="text" name="Contact" placeholder="Contact" value="<?php echo $Contact; ?>"><br>
+        Contact: <input type="text" name="Contact" placeholder="Contact" value="<?php echo $Contact; ?>"><br>
             <span class="error"><?php echo $ContactErr; ?></span><br>
+
+        Password: <input type="password" name="Password" value="<?php echo $Password; ?>"><br>
+            <span class="error"><?php echo $PasswordErr; ?></span><br>
+
+        Confirm Password: <input type="password" name="CPassword" value="<?php echo $CPassword; ?>"><br>
+            <span class="error"><?php echo $CPasswordErr; ?></span><br>
 
         <input type="submit" value="Submit">
     </form>
     <hr>
 <?php
-    include("class/database.php");
-    if($CompleteName && $CompleteAddress && $EmailAddress && $Section && $Contact){
+    
 
-        $query = mysqli_query($connections, "INSERT INTO sir (Name, Adress, Email, Section, Contact) 
-        VALUES('$CompleteName', '$CompleteAddress', '$EmailAddress', '$Section ', '$Contact') ");
+        // $query = mysqli_query($connections, "INSERT INTO sir (Name, Adress, Email, Section, Contact) 
+        // VALUES('$CompleteName', '$CompleteAddress', '$EmailAddress', '$Section ', '$Contact') ");
 
+        // echo "<script language='javascript'>alert('New Record has been inserted!')</script>";
+        // echo "<script>windows.location.href='activity.php';</script>";
 
-        echo "<script language='javascript'>alert('New Record has been inserted!')</script>";
-        echo "<script>windows.location.href='activity.php';</script>";
-    }
         $view_query = mysqli_query($connections, "SELECT * FROM sir");
         echo "<table  border='1' width ='50%'>";
         echo"<tr>
