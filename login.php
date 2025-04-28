@@ -37,10 +37,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if($Check_email_row > 0){
                 while($row = mysqli_fetch_assoc($Check_email)){
+
+                    $user_id = $row["id"];
+
                     $db_password = $row["Password"];
                     $db_account_type = $row ["Account_type"];
 
                     if($Password == $db_password){
+
+                        session_start();
+                        $_SESSION["id"] = $user_id;
 
                         if($db_account_type == "1"){
                             echo "<script>window.location.href='admin';</script>";
